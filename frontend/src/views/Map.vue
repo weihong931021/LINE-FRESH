@@ -133,15 +133,24 @@ const initMap = () => {
           content: `
             <div style="
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-              padding: 16px;
+              padding: 12px 16px 16px 16px;
               min-width: 240px;
             ">
-              <h3 style="
-                font-size: 16px;
-                font-weight: bold;
-                color: #111827;
-                margin: 0 0 8px 0;
-              ">${quest.title}</h3>
+              <div style="
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              ">
+                <h3 style="
+                  font-size: 16px;
+                  font-weight: bold;
+                  color: #111827;
+                  margin: 0;
+                  flex: 1;
+                  padding-right: 8px;
+                ">${quest.title}</h3>
+              </div>
               <p style="
                 font-size: 14px;
                 color: #6B7280;
@@ -240,6 +249,14 @@ const initMap = () => {
   router.push(`/scan/${questId}`)
 }
 
+// 回到用戶位置
+const recenterMap = () => {
+  if (mapInstance && userLocation.value) {
+    mapInstance.setCenter(userLocation.value)
+    mapInstance.setZoom(15)
+  }
+}
+
 onUnmounted(() => {
   mapInstance = null
 })
@@ -272,6 +289,18 @@ onUnmounted(() => {
 
       <div v-else>
         <div ref="mapContainer" class="w-full h-full" style="min-height: calc(100vh - 140px); background: #e5e7eb;"></div>
+
+        <!-- 回到我的位置按鈕 -->
+        <button 
+          @click="recenterMap"
+          class="absolute top-4 right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-[1000]"
+          title="回到我的位置"
+        >
+          <svg class="w-6 h-6 text-[#06C755]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
 
         <div class="absolute bottom-4 left-3 right-3 bg-white rounded-2xl shadow-xl p-5 z-[1000]">
           <div class="flex items-center gap-4">
