@@ -40,8 +40,15 @@ const nearbyPlayers = [
         <div class="space-y-3">
           <div v-for="player in nearbyPlayers" :key="player.id" class="bg-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-2xl">
-                {{ player.avatar }}
+              <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-[#06C755]/20">
+                <svg class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
               </div>
               <div>
                 <p class="font-medium text-gray-900">{{ player.name }}</p>
@@ -59,7 +66,7 @@ const nearbyPlayers = [
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <h3 class="font-bold text-gray-900 mb-3">創建隊伍</h3>
         <p class="text-sm text-gray-600 mb-4">開啟公開房間讓其他玩家加入</p>
-        <button class="w-full py-3 border-2 border-[#06C755] text-[#06C755] font-medium rounded-xl hover:bg-[#06C755]/5 transition-colors">
+        <button class="w-full py-3 bg-[#06C755] hover:bg-[#05b04b] text-white font-medium rounded-xl transition-colors">
           開啟公開房間
         </button>
       </div>

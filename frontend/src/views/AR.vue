@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
+const route = useRoute()
 const router = useRouter()
 const canvasRef = ref<HTMLCanvasElement>()
 const isLoading = ref(true)
+const showReveal = ref(false)
+const questId = route.query.quest as string
+
+// 志希館任務特殊處理
+const isZhixiQuest = questId === 'q_105'
+const showHint = ref(true)
+const hintExpanded = ref(false)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -99,9 +107,9 @@ onMounted(() => {
       // 移除載入中的立方體
       scene.remove(loadingCube)
       
-      // 添加模型
+      // 添加模型（往下移到畫面下方 1/3）
       gltf.scene.scale.set(2, 2, 2)
-      gltf.scene.position.set(0, 0, 0)
+      gltf.scene.position.set(0, -2, 0)
       scene.add(gltf.scene)
       
       isLoading.value = false
@@ -156,6 +164,17 @@ onMounted(() => {
     }
   })
 })
+
+// 模擬找到物品（點擊 3D 模型後觸發）
+const handleCollectItem = () => {
+  if (isZhixiQuest) {
+    showReveal.value = true
+  }
+}
+
+const handleCompleteQuest = () => {
+  router.push('/rewards')
+}
 </script>
 
 <template>
@@ -178,8 +197,142 @@ onMounted(() => {
       </div>
     </header>
 
+    <!-- 謎題提示區域 (志希館任務專用) -->
+    <div 
+      v-if="isZhixiQuest && showHint" 
+      class="absolute top-24 left-4 right-4 z-10 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50 transition-all duration-300"
+      :class="hintExpanded ? 'p-5' : 'p-4'"
+    >
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-[#06C755] rounded-full flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-gray-900 text-sm">謎題線索</h3>
+        </div>
+        <button @click="showHint = false" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- 簡化版內容 -->
+      <div v-if="!hintExpanded" class="space-y-2">
+        <div class="flex items-center gap-2 text-sm text-gray-700">
+          <span>🔢</span>
+          <span>第三層的起點</span>
+        </div>
+        <div class="flex items-center gap-2 text-sm text-gray-700">
+          <span>⭕</span>
+          <span>循環的開始</span>
+        </div>
+        <button 
+          @click="hintExpanded = true"
+          class="text-[#06C755] text-xs font-medium hover:underline flex items-center gap-1 mt-2"
+        >
+          <span>查看更多線索</span>
+          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- 完整版內容 -->
+      <div v-else class="space-y-3">
+        <div class="space-y-2">
+          <div class="flex items-center gap-3 text-sm text-gray-700 p-2 bg-gray-50 rounded-lg">
+            <span class="text-lg">🔢</span>
+            <span>第三層的起點</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-700 p-2 bg-gray-50 rounded-lg">
+            <span class="text-lg">⭕</span>
+            <span>循環的開始</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-700 p-2 bg-gray-50 rounded-lg">
+            <span class="text-lg">📅</span>
+            <span>一週的終結</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-700 p-2 bg-gray-50 rounded-lg">
+            <span class="text-lg">🔄</span>
+            <span>知識的迴圈</span>
+          </div>
+        </div>
+        
+        <div class="pt-3 border-t border-gray-200">
+          <div class="flex items-center gap-2 text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+            <span class="font-medium">答案：307 教室</span>
+          </div>
+        </div>
+
+        <button 
+          @click="hintExpanded = false"
+          class="text-gray-500 text-xs font-medium hover:text-gray-700 flex items-center gap-1 mt-2 mx-auto"
+        >
+          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+          </svg>
+          <span>收起</span>
+        </button>
+      </div>
+    </div>
+
     <!-- 3D Canvas -->
     <canvas ref="canvasRef" class="w-full h-full"></canvas>
+
+    <!-- 揭曉訊息 Modal (志希館任務) -->
+    <div v-if="showReveal" class="absolute inset-0 bg-black/70 backdrop-blur-sm z-20 flex items-center justify-center p-6" @click="showReveal = false">
+      <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl" @click.stop>
+        <div class="text-center mb-6">
+          <div class="w-20 h-20 bg-[#06C755] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">門牌 307 啟動</h2>
+          <div class="h-1 w-20 bg-[#06C755] mx-auto rounded-full"></div>
+        </div>
+
+        <div class="bg-gradient-to-br from-[#06C755]/10 to-[#05b04b]/10 rounded-2xl p-5 mb-6 border border-[#06C755]/20">
+          <p class="text-gray-700 leading-relaxed mb-4">
+            謝謝你——<br>
+            你找到我一直想傳遞的教室。<br>
+            307 不只是房號，<br>
+            它是『<span class="font-bold text-[#06C755]">第三層的零起點，也是一周七日知識循環的象徵</span>』。
+          </p>
+          <p class="text-gray-600 text-sm">
+            把這份資料帶走吧。<br>
+            有一天，它會再被需要。
+          </p>
+        </div>
+
+        <div class="bg-amber-50 rounded-2xl p-4 mb-6 border-2 border-amber-200">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <p class="font-bold text-amber-900 text-sm">獲得任務物品</p>
+              <p class="text-xs text-amber-700">《志希館回聲檔案》</p>
+            </div>
+          </div>
+        </div>
+
+        <button
+          @click="handleCompleteQuest"
+          class="w-full py-4 bg-[#06C755] hover:bg-[#05b04b] text-white font-bold rounded-xl transition-colors"
+        >
+          完成任務
+        </button>
+      </div>
+    </div>
 
     <!-- Bottom Controls -->
     <div class="absolute bottom-0 left-0 right-0 z-10 bg-white/90 backdrop-blur-sm border-t p-6">
@@ -208,10 +361,18 @@ onMounted(() => {
         </div>
       </div>
       <button
+        v-if="!isZhixiQuest"
         @click="router.push('/rewards')"
         class="w-full py-4 bg-[#06C755] hover:bg-[#05b04b] text-white font-bold rounded-xl transition-colors"
       >
         完成任務
+      </button>
+      <button
+        v-else
+        @click="handleCollectItem"
+        class="w-full py-4 bg-[#06C755] hover:bg-[#05b04b] text-white font-bold rounded-xl transition-colors"
+      >
+        收集資料檔案
       </button>
     </div>
   </main>

@@ -221,7 +221,7 @@ const initMap = () => {
                 onmouseover="this.style.background='#05b04b'"
                 onmouseout="this.style.background='#06C755'"
               >
-                開始掃描任務
+                開始任務
               </button>
             </div>
           `,

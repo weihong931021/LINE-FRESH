@@ -165,7 +165,7 @@ const quest = computed(() => questStore.getQuestById(questId))
         @click="router.push(`/scan/${quest.id}`)"
         class="w-full py-4 bg-[#06C755] hover:bg-[#05b04b] text-white font-bold rounded-xl transition-colors shadow-lg shadow-[#06C755]/20"
       >
-        前往 AR 掃描
+        前往任務地點
       </button>
     </div>
   </main>

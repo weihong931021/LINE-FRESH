@@ -32,8 +32,8 @@ export const useQuestStore = defineStore('quest', () => {
       type: '單人',
       location: '320桃園市中壢區中大路300號',
       aiStory: '中央大學圖書館不只是讀書的地方，這裡藏著許多有趣的角落。今天就來探索這座知識寶庫，完成你的尋寶之旅！',
-      requirements: ['需要到達現場', '使用 AR 掃描標記', '可單人完成'],
-      milestones: ['前往圖書館', 'AR 掃描', '上傳結果', '領取獎勵'],
+      requirements: ['需要到達現場', '使用 AR 查看標記', '可單人完成'],
+      milestones: ['前往圖書館', 'AR 查看', '上傳結果', '領取獎勵'],
       currentStep: 0,
       lat: 24.9675,
       lng: 121.1950,
@@ -49,8 +49,8 @@ export const useQuestStore = defineStore('quest', () => {
       type: '單人',
       location: '中央大學田徑場',
       aiStory: '操場是揮灑汗水的地方，但今天你將在這裡發現不一樣的樂趣。完成運動挑戰，獲得專屬獎勵！',
-      requirements: ['前往操場', '完成運動挑戰', 'AR 掃描打卡'],
-      milestones: ['抵達操場', '運動挑戰', 'AR 掃描', '完成任務'],
+      requirements: ['前往操場', '完成運動挑戰', 'AR 打卡'],
+      milestones: ['抵達操場', '運動挑戰', 'AR 查看', '完成任務'],
       currentStep: 0,
       lat: 24.9685,
       lng: 121.1935,
@@ -91,17 +91,32 @@ export const useQuestStore = defineStore('quest', () => {
     },
     {
       id: 'q_105',
-      title: '志希館探索',
+      title: '志希館・知識迴響',
       distance: 300,
       eta: 8,
-      aiBlurb: '探訪歷史建築，了解中大的故事',
+      aiBlurb: '一份未送出的研究資料遺落在志希館的某間教室……',
       image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/line_brown-grjP2fY9actWaJZ1hhLKWMAty8vjwN.png',
-      difficulty: '簡單',
+      difficulty: '中等',
       type: '單人',
       location: '中央大學志希館',
-      aiStory: '志希館承載著中央大學的歷史記憶，今天就來探索這棟建築的故事，完成歷史尋寶任務。',
-      requirements: ['前往志希館', 'AR 掃描歷史標記', '學習校史'],
-      milestones: ['抵達志希館', '掃描標記', '閱讀故事', '完成學習'],
+      aiStory: `嘿——如果你看到這段訊息，代表你也是能聽到「那個房間」的人……
+
+一份未送出的研究資料遺落在志希館的某間教室，它的門牌編號三個數字會對應某種『規律』。
+
+找到它 —— 送達它 —— 完成我未盡的任務。
+
+【謎題提示】
+🔢 第三層的起點
+⭕ 循環的開始  
+📅 一週的終結
+🔄 知識的迴圈`,
+      requirements: [
+        '前往志希館 1 公里範圍內',
+        '解開門牌號碼謎題',
+        '找到 307 教室',
+        '使用 AR 查看門牌'
+      ],
+      milestones: ['接收訊號', '解謎尋找', 'AR 掃描', '獲得檔案'],
       currentStep: 0,
       lat: 24.9680,
       lng: 121.1940,

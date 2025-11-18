@@ -67,6 +67,17 @@ export const useUserStore = defineStore('user', () => {
       threshold: 5,
       unlocked: false,
     },
+    {
+      id: 'ach005',
+      name: '志希館・知識導航者',
+      desc: '解開 307 教室的謎題，獲得《志希館回聲檔案》',
+      category: 'special',
+      rarity: 'epic',
+      points: 100,
+      progress: 0,
+      threshold: 1,
+      unlocked: false,
+    },
   ])
 
   const unlockedAchievements = computed(() => 

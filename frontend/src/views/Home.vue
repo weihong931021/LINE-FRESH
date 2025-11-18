@@ -63,7 +63,7 @@ const handleLogin = () => {
             </svg>
           </div>
           <div class="flex-1">
-            <p class="font-semibold text-gray-900 text-sm">AR 掃描體驗</p>
+            <p class="font-semibold text-gray-900 text-sm">AR 互動體驗</p>
             <p class="text-xs text-gray-500">現實與虛擬的完美結合</p>
           </div>
         </div>
