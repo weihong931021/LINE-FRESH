@@ -113,7 +113,6 @@ export const useQuestStore = defineStore('quest', () => {
       requirements: [
         '前往志希館 1 公里範圍內',
         '解開門牌號碼謎題',
-        '找到 307 教室',
         '使用 AR 查看門牌'
       ],
       milestones: ['接收訊號', '解謎尋找', 'AR 掃描', '獲得檔案'],

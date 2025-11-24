@@ -31,7 +31,7 @@ onMounted(() => {
   
   // 載入背景圖片
   const textureLoader = new THREE.TextureLoader()
-  textureLoader.load('/park.jpg', (texture) => {
+  textureLoader.load('/305.jpg', (texture) => {
     // 設定背景圖片不要重複，並使用 cover 模式（類似 CSS background-size: cover）
     texture.minFilter = THREE.LinearFilter
     texture.magFilter = THREE.LinearFilter
@@ -47,7 +47,7 @@ onMounted(() => {
     } else {
       // 螢幕比圖片高，以高度為準
       texture.repeat.set(screenAspect / imageAspect, 1)
-      texture.offset.set((1 - screenAspect / imageAspect) / 2, 0)
+      texture.offset.set((1 - screenAspect / imageAspect) / 1, 0)
     }
     
     scene.background = texture
@@ -64,7 +64,7 @@ onMounted(() => {
     0.1,
     1000
   )
-  camera.position.set(5, 5, 5)
+  camera.position.set(5, 4, 5)
   camera.lookAt(0, 0, 0)
 
   // 創建渲染器
@@ -107,9 +107,9 @@ onMounted(() => {
       // 移除載入中的立方體
       scene.remove(loadingCube)
       
-      // 添加模型（往下移到畫面下方 1/3）
+      // 添加模型（往下移到畫面下方）
       gltf.scene.scale.set(2, 2, 2)
-      gltf.scene.position.set(0, -2, 0)
+      gltf.scene.position.set(0, -2.5, 0)
       scene.add(gltf.scene)
       
       isLoading.value = false
@@ -260,15 +260,6 @@ const handleCompleteQuest = () => {
             <span>知識的迴圈</span>
           </div>
         </div>
-        
-        <div class="pt-3 border-t border-gray-200">
-          <div class="flex items-center gap-2 text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-            </svg>
-            <span class="font-medium">答案：307 教室</span>
-          </div>
-        </div>
 
         <button 
           @click="hintExpanded = false"
@@ -294,16 +285,14 @@ const handleCompleteQuest = () => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 class="text-2xl font-bold text-gray-900 mb-2">門牌 307 啟動</h2>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">任務完成</h2>
           <div class="h-1 w-20 bg-[#06C755] mx-auto rounded-full"></div>
         </div>
 
         <div class="bg-gradient-to-br from-[#06C755]/10 to-[#05b04b]/10 rounded-2xl p-5 mb-6 border border-[#06C755]/20">
           <p class="text-gray-700 leading-relaxed mb-4">
             謝謝你——<br>
-            你找到我一直想傳遞的教室。<br>
-            307 不只是房號，<br>
-            它是『<span class="font-bold text-[#06C755]">第三層的零起點，也是一周七日知識循環的象徵</span>』。
+            你找到我一直想傳遞的教室。
           </p>
           <p class="text-gray-600 text-sm">
             把這份資料帶走吧。<br>

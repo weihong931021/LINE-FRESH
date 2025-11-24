@@ -70,7 +70,7 @@ export const useUserStore = defineStore('user', () => {
     {
       id: 'ach005',
       name: '志希館・知識導航者',
-      desc: '解開 307 教室的謎題，獲得《志希館回聲檔案》',
+      desc: '解開教室的謎題，獲得《志希館回聲檔案》',
       category: 'special',
       rarity: 'epic',
       points: 100,
