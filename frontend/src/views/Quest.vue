@@ -12,7 +12,7 @@ const quest = computed(() => questStore.getQuestById(questId))
 </script>
 
 <template>
-  <main v-if="quest" class="min-h-full bg-gray-50 pb-8">
+  <main v-if="quest" class="min-h-screen bg-gray-50 pb-8">
     <!-- Header -->
     <header class="bg-white border-b sticky top-0 z-10">
       <div class="px-4 py-4 flex items-center gap-3">

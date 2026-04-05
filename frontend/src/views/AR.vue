@@ -178,7 +178,7 @@ const handleCompleteQuest = () => {
 </script>
 
 <template>
-  <main class="w-full h-full bg-white relative">
+  <main class="w-full h-screen bg-white relative">
     <!-- Header -->
     <header class="absolute top-0 left-0 right-0 z-10 bg-white/90 backdrop-blur-sm border-b">
       <div class="px-4 py-4 flex items-center justify-between">

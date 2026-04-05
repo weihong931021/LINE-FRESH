@@ -16,7 +16,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <main class="min-h-full bg-gray-50 pb-20">
+  <main class="min-h-screen bg-gray-50 pb-20">
     <!-- Header -->
     <header class="bg-gradient-to-br from-[#06C755] to-[#05b04b] text-white">
       <div class="px-4 py-8">

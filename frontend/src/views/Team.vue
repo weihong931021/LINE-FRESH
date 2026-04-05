@@ -189,7 +189,7 @@ function getDifficultyColor(difficulty: string) {
 </script>
 
 <template>
-  <main class="min-h-full bg-gray-50 pb-24">
+  <main class="min-h-screen bg-gray-50 pb-24">
     <!-- Header -->
     <header class="bg-white border-b sticky top-0 z-10">
       <div class="px-4 py-4 flex items-center gap-3">
