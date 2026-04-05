@@ -97,7 +97,7 @@ const handleInviteTeam = () => {
 </script>
 
 <template>
-  <main class="min-h-screen bg-white flex flex-col">
+  <main class="min-h-full bg-white flex flex-col">
     <!-- Header -->
     <header class="bg-white border-b sticky top-0 z-10">
       <div class="px-4 py-4 flex items-center gap-3">

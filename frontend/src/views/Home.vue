@@ -12,7 +12,7 @@ const handleLogin = () => {
 </script>
 
 <template>
-  <main class="h-screen bg-white flex flex-col overflow-hidden">
+  <main class="h-full bg-white flex flex-col overflow-hidden">
     <div class="flex-1 flex flex-col items-center justify-center px-6 py-8">
       <!-- LINE Logo -->
       <div class="mb-6">

@@ -263,14 +263,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <main class="min-h-screen bg-gray-50 pb-20">
+  <main class="min-h-full bg-gray-50 pb-20">
     <header class="bg-white border-b sticky top-0 z-[1000]">
       <div class="px-4 py-4 flex items-center justify-between">
         <h1 class="text-lg font-bold text-gray-900">任務地圖</h1>
       </div>
     </header>
 
-    <div class="relative h-[calc(100vh-140px)]">
+    <div class="relative h-[calc(100%-140px)]">
       <div v-if="!userLocation" class="h-full flex items-center justify-center bg-gray-100">
         <div class="text-center">
           <div class="inline-flex items-center justify-center w-16 h-16 bg-[#06C755] rounded-full mb-4 animate-pulse">
@@ -288,7 +288,7 @@ onUnmounted(() => {
       </div>
 
       <div v-else>
-        <div ref="mapContainer" class="w-full h-full" style="min-height: calc(100vh - 140px); background: #e5e7eb;"></div>
+        <div ref="mapContainer" class="w-full h-full" style="min-height: calc(100% - 140px); background: #e5e7eb;"></div>
 
         <!-- 回到我的位置按鈕 -->
         <button 
